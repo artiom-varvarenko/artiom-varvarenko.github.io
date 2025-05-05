@@ -1,0 +1,1863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CyberSec Expert | Penetration Tester</title>
+  <style>
+    :root {
+      --primary: #00ff41;
+      --secondary: #00b33c;
+      --dark: #0a0a0a;
+      --light: #f5f5f5;
+      --accent: #ff004c;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Courier New', monospace;
+    }
+
+    body {
+      background-color: var(--dark);
+      color: var(--primary);
+      overflow-x: hidden;
+    }
+
+    .glitch-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.05;
+    }
+
+    .glitch {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+              0deg,
+              rgba(0, 255, 65, 0.15),
+              rgba(0, 255, 65, 0.15) 1px,
+              transparent 1px,
+              transparent 2px
+      );
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    header {
+      padding: 30px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--primary);
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+    }
+
+    .nav-links a {
+      color: var(--primary);
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: 14px;
+      letter-spacing: 1px;
+      position: relative;
+      padding: 5px 0;
+      transition: all 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background-color: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .hero {
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      padding: 60px 0;
+    }
+
+    .hero-content {
+      width: 60%;
+    }
+
+    .hero-title {
+      font-size: 64px;
+      line-height: 1.1;
+      margin-bottom: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-title span {
+      display: block;
+    }
+
+    .hero-subtitle {
+      font-size: 18px;
+      margin-bottom: 40px;
+      line-height: 1.6;
+      max-width: 600px;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      padding: 12px 30px;
+      background-color: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: 14px;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-btn:hover {
+      background-color: var(--primary);
+      color: var(--dark);
+    }
+
+    .security-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 30px;
+      margin: 100px 0;
+    }
+
+    .security-card {
+      padding: 30px;
+      border: 1px solid var(--primary);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .security-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 0;
+      background-color: var(--accent);
+      transition: height 0.3s ease;
+    }
+
+    .security-card:hover::before {
+      height: 100%;
+    }
+
+    .security-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 255, 65, 0.1);
+    }
+
+    .security-card h3 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: var(--accent);
+    }
+
+    .security-card p {
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .terminal-section {
+      margin: 100px 0;
+    }
+
+    .terminal {
+      background-color: #0f0f0f;
+      border: 1px solid var(--primary);
+      padding: 20px;
+      border-radius: 5px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .terminal-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(0, 255, 65, 0.3);
+    }
+
+    .terminal-circles {
+      display: flex;
+      gap: 10px;
+      margin-right: 20px;
+    }
+
+    .terminal-circle {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .red { background-color: #ff5f56; }
+    .yellow { background-color: #ffbd2e; }
+    .green { background-color: #27c93f; }
+
+    .terminal-title {
+      font-size: 14px;
+      color: rgba(0, 255, 65, 0.7);
+    }
+
+    .terminal-content {
+      font-family: 'Courier New', monospace;
+      line-height: 1.6;
+    }
+
+    .terminal-content p {
+      margin-bottom: 10px;
+    }
+
+    .typing {
+      border-right: 2px solid var(--primary);
+      white-space: nowrap;
+      overflow: hidden;
+      animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+      margin-bottom: 10px;
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: var(--primary) }
+    }
+
+    .projects-section {
+      margin: 100px 0;
+    }
+
+    .section-title {
+      font-size: 36px;
+      margin-bottom: 50px;
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background-color: var(--primary);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 30px;
+    }
+
+    .project-card {
+      position: relative;
+      height: 300px;
+      overflow: hidden;
+      border: 1px solid var(--primary);
+    }
+
+    .project-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #1a1a1a;
+      transition: all 0.3s ease;
+    }
+
+    .project-overlay {
+      position: absolute;
+      bottom: -100%;
+      left: 0;
+      width: 100%;
+      padding: 30px;
+      background-color: rgba(0, 255, 65, 0.9);
+      color: var(--dark);
+      transition: all 0.3s ease;
+    }
+
+    .project-card:hover .project-overlay {
+      bottom: 0;
+    }
+
+    .project-card:hover .project-image {
+      transform: scale(1.05);
+    }
+
+    .project-title {
+      font-size: 24px;
+      margin-bottom: 15px;
+    }
+
+    .project-desc {
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .project-link {
+      color: var(--dark);
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .project-link svg {
+      margin-left: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .project-link:hover svg {
+      transform: translateX(5px);
+    }
+
+    .contact-section {
+      margin: 100px 0;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+    }
+
+    .contact-info h3 {
+      font-size: 24px;
+      margin-bottom: 30px;
+      color: var(--accent);
+    }
+
+    .contact-info p {
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .contact-links {
+      margin-top: 30px;
+    }
+
+    .contact-links a {
+      display: inline-block;
+      margin-right: 20px;
+      color: var(--primary);
+      font-size: 24px;
+      transition: all 0.3s ease;
+    }
+
+    .contact-links a:hover {
+      color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    .contact-form {
+      display: grid;
+      gap: 20px;
+    }
+
+    .form-group {
+      position: relative;
+    }
+
+    .form-control {
+      width: 100%;
+      background-color: transparent;
+      border: 1px solid var(--primary);
+      padding: 15px;
+      color: var(--primary);
+      font-family: 'Courier New', monospace;
+      resize: none;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .form-control::placeholder {
+      color: rgba(0, 255, 65, 0.5);
+    }
+
+    textarea.form-control {
+      min-height: 150px;
+    }
+
+    .submit-btn {
+      padding: 15px 30px;
+      background-color: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      cursor: pointer;
+      text-transform: uppercase;
+      font-weight: bold;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      background-color: var(--primary);
+      color: var(--dark);
+    }
+
+    footer {
+      padding: 50px 0;
+      border-top: 1px solid var(--primary);
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin: 20px 0;
+    }
+
+    .footer-links a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+    }
+
+    .copyright {
+      font-size: 14px;
+      color: rgba(0, 255, 65, 0.7);
+    }
+
+    @media (max-width: 768px) {
+      .hero-content {
+        width: 100%;
+      }
+
+      .hero-title {
+        font-size: 42px;
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .binary-rain {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.1;
+    }
+
+    .scan-line {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background-color: rgba(0, 255, 65, 0.5);
+      box-shadow: 0 0 15px rgba(0, 255, 65, 0.7);
+      z-index: 3;
+      pointer-events: none;
+      animation: scanline 10s linear infinite;
+    }
+
+    @keyframes scanline {
+      0% {
+        top: 0%;
+      }
+      100% {
+        top: 100%;
+      }
+    }
+
+    .code-section {
+      margin: 100px 0;
+    }
+
+    .code-container {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .code-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--primary);
+      margin-bottom: 20px;
+    }
+
+    .code-tab {
+      background: transparent;
+      border: none;
+      color: var(--primary);
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 16px;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .code-tab::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    .code-tab:hover::after,
+    .code-tab.active::after {
+      width: 100%;
+    }
+
+    .code-tab.active {
+      color: var(--accent);
+    }
+
+    .code-editor-container {
+      position: relative;
+      border: 1px solid var(--primary);
+      background-color: #0f0f0f;
+      height: 400px;
+      overflow: hidden;
+    }
+
+    .code-editor {
+      display: none;
+      height: 100%;
+      overflow: auto;
+    }
+
+    .code-editor.active {
+      display: block;
+    }
+
+    .editor-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      border-bottom: 1px solid rgba(0, 255, 65, 0.3);
+    }
+
+    .file-name {
+      color: var(--primary);
+      font-size: 14px;
+    }
+
+    .editor-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .run-btn {
+      background-color: var(--accent);
+      color: var(--dark);
+      border: none;
+      padding: 5px 15px;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .run-btn:hover {
+      background-color: #ff2d6b;
+    }
+
+    .code-content {
+      margin: 0;
+      padding: 20px;
+      overflow: auto;
+      height: calc(100% - 50px);
+      color: var(--primary);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .code-output {
+      border: 1px solid var(--primary);
+      background-color: #0f0f0f;
+      margin-top: 20px;
+      height: 200px;
+      overflow: hidden;
+    }
+
+    .output-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      border-bottom: 1px solid rgba(0, 255, 65, 0.3);
+    }
+
+    .output-title {
+      color: var(--primary);
+      font-size: 14px;
+    }
+
+    .clear-btn {
+      background-color: transparent;
+      color: var(--primary);
+      border: 1px solid var(--primary);
+      padding: 5px 15px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .clear-btn:hover {
+      background-color: rgba(0, 255, 65, 0.1);
+    }
+
+    .output-content {
+      padding: 20px;
+      overflow: auto;
+      height: calc(100% - 50px);
+      color: var(--primary);
+      font-family: monospace;
+      white-space: pre-wrap;
+    }
+
+    .skills-subtitle {
+      color: var(--accent);
+      font-size: 24px;
+      margin: 30px 0 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(0, 255, 65, 0.3);
+    }
+
+    .skill-bar {
+      margin-bottom: 30px;
+    }
+
+    .skill-info {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .skill-progress {
+      width: 100%;
+      height: 5px;
+      background-color: rgba(0, 255, 65, 0.2);
+      position: relative;
+    }
+
+    .skill-progress-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      background-color: var(--primary);
+      animation: fillProgress 1.5s ease-out forwards;
+      transform-origin: left;
+      transform: scaleX(0);
+    }
+
+    @keyframes fillProgress {
+      to {
+        transform: scaleX(1);
+      }
+    }
+
+    .highlight {
+      color: var(--accent);
+      position: relative;
+      display: inline-block;
+    }
+
+    .highlight::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 30%;
+      background-color: rgba(255, 0, 76, 0.2);
+      bottom: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease;
+    }
+
+    .animate-on-scroll.appear {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes glitch {
+      0% {
+        transform: translate(0);
+      }
+      20% {
+        transform: translate(-2px, 2px);
+      }
+      40% {
+        transform: translate(-2px, -2px);
+      }
+      60% {
+        transform: translate(2px, 2px);
+      }
+      80% {
+        transform: translate(2px, -2px);
+      }
+      100% {
+        transform: translate(0);
+      }
+    }
+
+    .glitch-text {
+      position: relative;
+      display: inline-block;
+    }
+
+    .glitch-text::before,
+    .glitch-text::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .glitch-text::before {
+      left: 2px;
+      text-shadow: -2px 0 var(--accent);
+      clip: rect(24px, 550px, 90px, 0);
+      animation: glitch-anim 3s infinite linear alternate-reverse;
+    }
+
+    .glitch-text::after {
+      left: -2px;
+      text-shadow: -2px 0 var(--secondary);
+      clip: rect(85px, 550px, 140px, 0);
+      animation: glitch-anim 2.5s infinite linear alternate-reverse;
+    }
+
+    @keyframes glitch-anim {
+      0% {
+        clip: rect(13px, 9999px, 56px, 0);
+      }
+      5% {
+        clip: rect(65px, 9999px, 91px, 0);
+      }
+      10% {
+        clip: rect(34px, 9999px, 44px, 0);
+      }
+      15% {
+        clip: rect(87px, 9999px, 22px, 0);
+      }
+      20% {
+        clip: rect(45px, 9999px, 46px, 0);
+      }
+      25% {
+        clip: rect(24px, 9999px, 87px, 0);
+      }
+      30% {
+        clip: rect(120px, 9999px, 34px, 0);
+      }
+      35% {
+        clip: rect(56px, 9999px, 34px, 0);
+      }
+      40% {
+        clip: rect(89px, 9999px, 115px, 0);
+      }
+      45% {
+        clip: rect(12px, 9999px, 76px, 0);
+      }
+      50% {
+        clip: rect(34px, 9999px, 101px, 0);
+      }
+      55% {
+        clip: rect(4px, 9999px, 34px, 0);
+      }
+      60% {
+        clip: rect(76px, 9999px, 3px, 0);
+      }
+      65% {
+        clip: rect(23px, 9999px, 56px, 0);
+      }
+      70% {
+        clip: rect(78px, 9999px, 87px, 0);
+      }
+      75% {
+        clip: rect(100px, 9999px, 34px, 0);
+      }
+      80% {
+        clip: rect(57px, 9999px, 23px, 0);
+      }
+      85% {
+        clip: rect(25px, 9999px, 56px, 0);
+      }
+      90% {
+        clip: rect(100px, 9999px, 103px, 0);
+      }
+      95% {
+        clip: rect(3px, 9999px, 134px, 0);
+      }
+      100% {
+        clip: rect(85px, 9999px, 67px, 0);
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="glitch-container">
+  <div class="glitch"></div>
+</div>
+
+<div class="scan-line"></div>
+
+<div class="binary-rain" id="binaryRain"></div>
+
+<div class="container">
+  <header>
+    <div class="logo">Cyber<span>Probe</span></div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#code">Code</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </header>
+
+  <section class="hero" id="about">
+    <div class="hero-content">
+      <h1 class="hero-title">
+        <span>Securing</span>
+        <span>Your <span class="glitch-text" data-text="Digital">Digital</span></span>
+        <span>Fortress</span>
+      </h1>
+      <p class="hero-subtitle">Professional penetration tester and software developer with dual expertise in offensive security and application development. I build secure systems and find weaknesses before the bad actors do.</p>
+      <a href="#contact" class="cta-btn">Get In Touch</a>
+    </div>
+  </section>
+
+  <section id="services">
+    <h2 class="section-title">Services</h2>
+    <div class="services-tabs">
+      <div class="tab-buttons">
+        <button class="tab-button active" data-tab="security">Security Services</button>
+        <button class="tab-button" data-tab="development">Development Services</button>
+      </div>
+
+      <div class="tab-content active" id="security-tab">
+        <div class="security-grid">
+          <div class="security-card animate-on-scroll">
+            <h3>Network Penetration</h3>
+            <p>Comprehensive assessment of your network infrastructure to identify vulnerabilities in firewalls, routers, switches, and other network devices.</p>
+          </div>
+          <div class="security-card animate-on-scroll">
+            <h3>Web Application Testing</h3>
+            <p>Thorough testing of web applications for vulnerabilities like SQL injection, XSS, CSRF, and other OWASP top 10 security risks.</p>
+          </div>
+          <div class="security-card animate-on-scroll">
+            <h3>Social Engineering</h3>
+            <p>Assessment of human-centered security vulnerabilities through phishing simulations, pretexting, and other social engineering techniques.</p>
+          </div>
+          <div class="security-card animate-on-scroll">
+            <h3>Mobile App Security</h3>
+            <p>In-depth analysis of mobile applications for security flaws, data leakage, inadequate encryption, and insecure communication.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="development-tab">
+        <div class="security-grid">
+          <div class="security-card animate-on-scroll">
+            <h3>Secure Web Development</h3>
+            <p>Building modern, responsive web applications with security as a core principle throughout the development lifecycle.</p>
+          </div>
+          <div class="security-card animate-on-scroll">
+            <h3>Custom Security Tools</h3>
+            <p>Development of bespoke security automation tools, scanners, and dashboards tailored to your organization's specific needs.</p>
+          </div>
+          <div class="security-card animate-on-scroll">
+            <h3>API Development</h3>
+            <p>Creating secure, well-documented, and performant APIs with proper authentication, authorization, and data validation.</p>
+          </div>
+          <div class="security-card animate-on-scroll">
+            <h3>DevSecOps Integration</h3>
+            <p>Implementation of security-focused CI/CD pipelines and automation to ensure security is built into every stage of development.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="terminal-section">
+    <div class="terminal">
+      <div class="terminal-header">
+        <div class="terminal-circles">
+          <div class="terminal-circle red"></div>
+          <div class="terminal-circle yellow"></div>
+          <div class="terminal-circle green"></div>
+        </div>
+        <div class="terminal-title">security-scan.sh</div>
+      </div>
+      <div class="terminal-content">
+        <p class="typing">root@cyberprobe:~# ./scan.sh --target enterprise-network</p>
+        <p>> Initializing comprehensive security scan...</p>
+        <p>> Performing reconnaissance...</p>
+        <p>> Identifying entry points...</p>
+        <p>> Scanning for vulnerabilities...</p>
+        <p>> Testing default credentials...</p>
+        <p>> Analyzing network traffic patterns...</p>
+        <p>> Checking for outdated software...</p>
+        <p>> Attempting privilege escalation...</p>
+        <p>> Preparing security report...</p>
+        <p class="typing">root@cyberprobe:~# cat security_report.txt</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="projects-section" id="projects">
+    <h2 class="section-title">Recent Projects</h2>
+    <div class="projects-grid">
+      <div class="project-card animate-on-scroll">
+        <div class="project-image"></div>
+        <div class="project-overlay">
+          <h3 class="project-title">Banking System Audit</h3>
+          <p class="project-desc">Comprehensive security assessment of a major financial institution's online banking platform.</p>
+          <a href="#" class="project-link">View Case Study
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="project-card animate-on-scroll">
+        <div class="project-image"></div>
+        <div class="project-overlay">
+          <h3 class="project-title">E-commerce Security</h3>
+          <p class="project-desc">Identified and patched critical vulnerabilities in a high-traffic e-commerce platform.</p>
+          <a href="#" class="project-link">View Case Study
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="project-card animate-on-scroll">
+        <div class="project-image"></div>
+        <div class="project-overlay">
+          <h3 class="project-title">IoT Device Vulnerability</h3>
+          <p class="project-desc">Discovered zero-day vulnerability in a popular smart home security system.</p>
+          <a href="#" class="project-link">View Case Study
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="project-card animate-on-scroll">
+        <div class="project-image"></div>
+        <div class="project-overlay">
+          <h3 class="project-title">Secure Authentication System</h3>
+          <p class="project-desc">Developed a multi-factor authentication system with biometric integration for enterprise clients.</p>
+          <a href="#" class="project-link">View Project
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="project-card animate-on-scroll">
+        <div class="project-image"></div>
+        <div class="project-overlay">
+          <h3 class="project-title">Threat Intelligence Dashboard</h3>
+          <p class="project-desc">Built a real-time dashboard for monitoring and analyzing security threats across network infrastructure.</p>
+          <a href="#" class="project-link">View Project
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="project-card animate-on-scroll">
+        <div class="project-image"></div>
+        <div class="project-overlay">
+          <h3 class="project-title">Secure Messaging App</h3>
+          <p class="project-desc">Designed and implemented an end-to-end encrypted messaging application with self-destructing messages.</p>
+          <a href="#" class="project-link">View Project
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="skills-section" id="skills">
+    <h2 class="section-title">Technical Expertise</h2>
+    <div class="skills-container">
+      <h3 class="skills-subtitle">Security Skills</h3>
+      <div class="skill-bar animate-on-scroll">
+        <div class="skill-info">
+          <span>Network Penetration Testing</span>
+          <span>95%</span>
+        </div>
+        <div class="skill-progress">
+          <div class="skill-progress-fill" style="width: 95%"></div>
+        </div>
+      </div>
+      <div class="skill-bar animate-on-scroll">
+        <div class="skill-info">
+          <span>Web Application Security</span>
+          <span>90%</span>
+        </div>
+        <div class="skill-progress">
+          <div class="skill-progress-fill" style="width: 90%"></div>
+        </div>
+      </div>
+      <div class="skill-bar animate-on-scroll">
+        <div class="skill-info">
+          <span>Social Engineering</span>
+          <span>85%</span>
+        </div>
+        <div class="skill-progress">
+          <div class="skill-progress-fill" style="width: 85%"></div>
+        </div>
+      </div>
+      <div class="skill-bar animate-on-scroll">
+        <div class="skill-info">
+          <span>IoT Security</span>
+          <span>85%</span>
+        </div>
+        <div class="skill-progress">
+          <div class="skill-progress-fill" style="width: 85%"></div>
+        </div>
+      </div>
+
+      <h3 class="skills-subtitle">Development Skills</h3>
+      <div class="skill-bar animate-on-scroll">
+        <div class="skill-info">
+          <span>Full-Stack Development</span>
+          <span>90%</span>
+        </div>
+        <div class="skill-progress">
+          <div class="skill-progress-fill" style="width: 90%"></div>
+        </div>
+      </div>
+      <div class="skill-bar animate-on-scroll">
+        <div class="skill-info">
+          <span>JavaScript/TypeScript</span>
+          <span>95%</span>
+        </div>
+        <div class="skill-progress">
+          <div class="skill-progress-fill" style="width: 95%"></div>
+        </div>
+      </div>
+      <div class="skill-bar animate-on-scroll">
+        <div class="skill-info">
+          <span>Python/Django</span>
+          <span>90%</span>
+        </div>
+        <div class="skill-progress">
+          <div class="skill-progress-fill" style="width: 90%"></div>
+        </div>
+      </div>
+      <div class="skill-bar animate-on-scroll">
+        <div class="skill-info">
+          <span>React/Node.js</span>
+          <span>85%</span>
+        </div>
+        <div class="skill-progress">
+          <div class="skill-progress-fill" style="width: 85%"></div>
+        </div>
+      </div>
+      <div class="skill-bar animate-on-scroll">
+        <div class="skill-info">
+          <span>Mobile App Development</span>
+          <span>80%</span>
+        </div>
+        <div class="skill-progress">
+          <div class="skill-progress-fill" style="width: 80%"></div>
+        </div>
+      </div>
+      <div class="skill-bar animate-on-scroll">
+        <div class="skill-info">
+          <span>DevSecOps</span>
+          <span>85%</span>
+        </div>
+        <div class="skill-progress">
+          <div class="skill-progress-fill" style="width: 85%"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Code Section with Live Code Editor -->
+  <section class="code-section" id="code">
+    <h2 class="section-title">Code Samples</h2>
+    <div class="code-container">
+      <div class="code-tabs">
+        <button class="code-tab active" data-code="scanner">Port Scanner</button>
+        <button class="code-tab" data-code="xss">XSS Detector</button>
+        <button class="code-tab" data-code="encryption">Encryption Tool</button>
+      </div>
+
+      <div class="code-editor-container">
+        <div class="code-editor active" id="scanner-code">
+          <div class="editor-header">
+            <div class="file-name">port_scanner.py</div>
+            <div class="editor-actions">
+              <button class="run-btn">Run Demo</button>
+            </div>
+          </div>
+          <pre class="code-content"><code class="language-python">#!/usr/bin/env python3
+import socket
+import sys
+import threading
+from datetime import datetime
+
+# Clear the screen
+print("-" * 50)
+print("Port Scanner - Advanced Version")
+print("-" * 50)
+
+# Define the target
+target = "localhost"  # Change this to your target
+
+# Define a function to scan ports
+def scan_port(port):
+    try:
+        # Create a socket object
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        # Set timeout for connection attempt
+        socket.setdefaulttimeout(1)
+        # Attempt to connect to the port
+        result = s.connect_ex((target, port))
+        # If connection successful
+        if result == 0:
+            print(f"Port {port}: Open")
+            try:
+                service = socket.getservbyport(port)
+                print(f"  Service: {service}")
+            except:
+                print("  Service: Unknown")
+        s.close()
+    except:
+        pass
+
+# Record the start time
+t1 = datetime.now()
+
+# Create a list to hold threads
+threads = []
+
+# Scan ports 1-1024 using threads
+for port in range(1, 1025):
+    thread = threading.Thread(target=scan_port, args=(port,))
+    threads.append(thread)
+    thread.start()
+
+# Wait for all threads to complete
+for thread in threads:
+    thread.join()
+
+# Record the end time
+t2 = datetime.now()
+
+# Calculate and display the duration
+print("-" * 50)
+print(f"Scan completed in: {t2 - t1}")
+print("-" * 50)</code></pre>
+        </div>
+
+        <div class="code-editor" id="xss-code">
+          <div class="editor-header">
+            <div class="file-name">xss_detector.js</div>
+            <div class="editor-actions">
+              <button class="run-btn">Run Demo</button>
+            </div>
+          </div>
+          <pre class="code-content"><code class="language-javascript">/**
+ * XSS Payload Detection Tool
+ * Scans input for common XSS attack patterns
+ */
+
+class XSSDetector {
+  constructor() {
+    this.patterns = [
+      /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,
+      /javascript\s*:/gi,
+      /onerror\s*=/gi,
+      /onload\s*=/gi,
+      /onclick\s*=/gi,
+      /onmouseover\s*=/gi,
+      /eval\s*\(/gi,
+      /expression\s*\(/gi,
+      /document\.cookie/gi,
+      /document\.location/gi,
+      /alert\s*\(/gi,
+      /prompt\s*\(/gi,
+      /confirm\s*\(/gi,
+      /iframe/gi,
+      /data:text\/html/gi,
+      /base64/gi
+    ];
+
+    this.riskLevels = {
+      HIGH: 'High Risk',
+      MEDIUM: 'Medium Risk',
+      LOW: 'Low Risk',
+      SAFE: 'No Detected Risk'
+    };
+  }
+
+  scan(input) {
+    if (!input) return { risk: this.riskLevels.SAFE, matches: [] };
+
+    const matches = [];
+    let highestRisk = this.riskLevels.SAFE;
+
+    // Check each pattern
+    this.patterns.forEach((pattern, index) => {
+      if (pattern.test(input)) {
+        let risk;
+
+        // Determine risk level based on pattern type
+        if (index < 5) {
+          risk = this.riskLevels.HIGH;
+        } else if (index < 10) {
+          risk = this.riskLevels.MEDIUM;
+        } else {
+          risk = this.riskLevels.LOW;
+        }
+
+        matches.push({
+          pattern: pattern.toString(),
+          risk
+        });
+
+        // Update highest risk level
+        if (risk === this.riskLevels.HIGH && highestRisk !== this.riskLevels.HIGH) {
+          highestRisk = this.riskLevels.HIGH;
+        } else if (risk === this.riskLevels.MEDIUM &&
+                  highestRisk !== this.riskLevels.HIGH &&
+                  highestRisk !== this.riskLevels.MEDIUM) {
+          highestRisk = this.riskLevels.MEDIUM;
+        } else if (risk === this.riskLevels.LOW && highestRisk === this.riskLevels.SAFE) {
+          highestRisk = this.riskLevels.LOW;
+        }
+      }
+    });
+
+    return {
+      risk: highestRisk,
+      matches
+    };
+  }
+
+  sanitize(input) {
+    if (!input) return '';
+
+    // Basic sanitization (in real-world, use a proper library)
+    return input
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#x27;')
+      .replace(/\//g, '&#x2F;');
+  }
+}
+
+// Demo usage
+const detector = new XSSDetector();
+const sample = '<img src="x" onerror="alert(document.cookie)">';
+console.log('Scanning:', sample);
+const result = detector.scan(sample);
+console.log('Result:', result);
+console.log('Sanitized:', detector.sanitize(sample));</code></pre>
+        </div>
+
+        <div class="code-editor" id="encryption-code">
+          <div class="editor-header">
+            <div class="file-name">encryption_tool.js</div>
+            <div class="editor-actions">
+              <button class="run-btn">Run Demo</button>
+            </div>
+          </div>
+          <pre class="code-content"><code class="language-javascript">/**
+ * End-to-End Encryption Demo Tool
+ * Uses Web Crypto API for client-side encryption
+ */
+
+class SecureMessenger {
+  constructor() {
+    this.keyPair = null;
+    this.publicKey = null;
+    this.privateKey = null;
+  }
+
+  // Generate RSA key pair
+  async generateKeyPair() {
+    try {
+      this.keyPair = await window.crypto.subtle.generateKey(
+        {
+          name: "RSA-OAEP",
+          modulusLength: 2048,
+          publicExponent: new Uint8Array([1, 0, 1]),
+          hash: "SHA-256",
+        },
+        true,
+        ["encrypt", "decrypt"]
+      );
+
+      this.publicKey = this.keyPair.publicKey;
+      this.privateKey = this.keyPair.privateKey;
+
+      // Export public key for sharing
+      const exportedPublicKey = await window.crypto.subtle.exportKey(
+        "spki",
+        this.publicKey
+      );
+
+      // Convert to base64 for easier sharing
+      const exportedPublicKeyBase64 = btoa(
+        String.fromCharCode(...new Uint8Array(exportedPublicKey))
+      );
+
+      console.log("Key pair generated successfully!");
+      console.log("Public Key (share this):", exportedPublicKeyBase64.slice(0, 64) + "...");
+
+      return exportedPublicKeyBase64;
+    } catch (err) {
+      console.error("Error generating key pair:", err);
+      return null;
+    }
+  }
+
+  // Encrypt a message with recipient's public key
+  async encryptMessage(message, recipientPublicKeyBase64) {
+    try {
+      // Convert base64 public key back to ArrayBuffer
+      const binaryString = atob(recipientPublicKeyBase64);
+      const bytes = new Uint8Array(binaryString.length);
+      for (let i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+      }
+
+      // Import the recipient's public key
+      const recipientPublicKey = await window.crypto.subtle.importKey(
+        "spki",
+        bytes.buffer,
+        {
+          name: "RSA-OAEP",
+          hash: "SHA-256",
+        },
+        false,
+        ["encrypt"]
+      );
+
+      // Encode the message
+      const encoder = new TextEncoder();
+      const encodedMessage = encoder.encode(message);
+
+      // Encrypt the message
+                      const encryptedDataBase64 = btoa(
+        String.fromCharCode(...new Uint8Array(encryptedData))
+      );
+
+      console.log("Message encrypted successfully!");
+      return encryptedDataBase64;
+    } catch (err) {
+      console.error("Error encrypting message:", err);
+      return null;
+    }
+  }
+
+  // Decrypt a message with your private key
+  async decryptMessage(encryptedMessageBase64) {
+    try {
+      if (!this.privateKey) {
+        throw new Error("Private key not available. Generate a key pair first.");
+      }
+
+      // Convert base64 encrypted message back to ArrayBuffer
+      const binaryString = atob(encryptedMessageBase64);
+      const bytes = new Uint8Array(binaryString.length);
+      for (let i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+      }
+
+      // Decrypt the message
+      const decryptedData = await window.crypto.subtle.decrypt(
+        {
+          name: "RSA-OAEP"
+        },
+        this.privateKey,
+        bytes.buffer
+      );
+
+      // Decode the decrypted data to text
+      const decoder = new TextDecoder();
+      const decryptedMessage = decoder.decode(decryptedData);
+
+      console.log("Message decrypted successfully!");
+      return decryptedMessage;
+    } catch (err) {
+      console.error("Error decrypting message:", err);
+      return null;
+    }
+  }
+}
+
+// Demo usage
+async function demo() {
+  console.log("Initializing Secure Messenger...");
+  const alice = new SecureMessenger();
+  const bob = new SecureMessenger();
+
+  console.log("Generating Alice's keys...");
+  const alicePublicKey = await alice.generateKeyPair();
+
+  console.log("Generating Bob's keys...");
+  const bobPublicKey = await bob.generateKeyPair();
+
+  const message = "This is a top secret message that only Bob should be able to read!";
+  console.log("Alice wants to send:", message);
+
+  console.log("Alice encrypting message with Bob's public key...");
+  const encryptedMessage = await alice.encryptMessage(message, bobPublicKey);
+
+  console.log("Encrypted message:", encryptedMessage.slice(0, 64) + "...");
+
+  console.log("Bob decrypting message with his private key...");
+  const decryptedMessage = await bob.decryptMessage(encryptedMessage);
+
+  console.log("Bob received:", decryptedMessage);
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="code-output">
+      <div class="output-header">
+        <div class="output-title">Console Output</div>
+        <button class="clear-btn">Clear</button>
+      </div>
+      <div class="output-content"></div>
+    </div>
+  </section>
+
+  <section class="contact-section" id="contact">
+    <h2 class="section-title">Get In Touch</h2>
+    <div class="contact-grid">
+      <div class="contact-info animate-on-scroll">
+        <h3>Let's Work Together</h3>
+        <p>Interested in enhancing your organization's security posture? Whether you need a comprehensive security assessment or specialized penetration testing services, I'm here to help secure your digital assets.</p>
+        <p>Based in <span class="highlight">Silicon Valley</span>, but available for remote and on-site engagements worldwide.</p>
+        <div class="contact-links">
+          <a href="#">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16 8C17.5913 8 19.1174 8.63214 20.2426 9.75736C21.3679 10.8826 22 12.4087 22 14V21H18V14C18 13.4696 17.7893 12.9609 17.4142 12.5858C17.0391 12.2107 16.5304 12 16 12C15.4696 12 14.9609 12.2107 14.5858 12.5858C14.2107 12.9609 14 13.4696 14 14V21H10V14C10 12.4087 10.6321 10.8826 11.7574 9.75736C12.8826 8.63214 14.4087 8 16 8Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M6 9H2V21H6V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M4 6C5.10457 6 6 5.10457 6 4C6 2.89543 5.10457 2 4 2C2.89543 2 2 2.89543 2 4C2 5.10457 2.89543 6 4 6Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a href="#">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M23 3C22.0424 3.67548 20.9821 4.19211 19.86 4.53C19.2577 3.83751 18.4573 3.34669 17.567 3.12393C16.6767 2.90116 15.7395 2.9572 14.8821 3.28444C14.0247 3.61167 13.2884 4.1944 12.773 4.95372C12.2575 5.71303 11.9877 6.61234 12 7.53V8.53C10.2426 8.57557 8.50127 8.18581 6.93101 7.40061C5.36074 6.61541 4.01032 5.45852 3 4.03C3 4.03 -1 13.03 8 17.03C5.94053 18.4284 3.48716 19.1369 1 19.03C10 24.03 21 19.03 21 7.53C20.9991 7.23049 20.9723 6.93171 20.92 6.64C21.9406 5.65416 22.6608 4.39678 23 3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a href="#">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M16 8V13C16 13.7956 16.3161 14.5587 16.8787 15.1213C17.4413 15.6839 18.2044 16 19 16C19.7956 16 20.5587 15.6839 21.1213 15.1213C21.6839 14.5587 22 13.7956 22 13V12C22 9.87827 21.1571 7.84344 19.6569 6.34315C18.1566 4.84285 16.1217 4 14 4H10C7.87827 4 5.84344 4.84285 4.34315 6.34315C2.84285 7.84344 2 9.87827 2 12C2 14.1217 2.84285 16.1566 4.34315 17.6569C5.84344 19.1571 7.87827 20 10 20H14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a href="#">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M17 2H7C4.23858 2 2 4.23858 2 7V17C2 19.7614 4.23858 22 7 22H17C19.7614 22 22 19.7614 22 17V7C22 4.23858 19.7614 2 17 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M16 11.37C16.1234 12.2022 15.9813 13.0522 15.5938 13.799C15.2063 14.5458 14.5932 15.1514 13.8416 15.5297C13.0901 15.9079 12.2385 16.0396 11.4078 15.9059C10.5771 15.7723 9.80977 15.3801 9.21485 14.7852C8.61993 14.1902 8.22774 13.4229 8.09408 12.5922C7.96042 11.7615 8.09208 10.9099 8.47033 10.1584C8.84858 9.40685 9.45419 8.79374 10.201 8.40624C10.9478 8.01874 11.7978 7.87659 12.63 8C13.4789 8.12588 14.2649 8.52146 14.8717 9.12831C15.4785 9.73515 15.8741 10.5211 16 11.37Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M17.5 6.5H17.51" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="contact-form animate-on-scroll">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Your Name">
+        </div>
+        <div class="form-group">
+          <input type="email" class="form-control" placeholder="Your Email">
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Subject">
+        </div>
+        <div class="form-group">
+          <textarea class="form-control" placeholder="Your Message"></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Send Message</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-links">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#code">Code</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="copyright">© 2025 CyberProbe Security. All Rights Reserved.</div>
+  </div>
+</footer>
+
+<script>
+  // Binary Rain Animation
+  function createBinaryRain() {
+    const binaryRainContainer = document.getElementById('binaryRain');
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const columnCount = Math.floor(width / 20);
+
+    for (let i = 0; i < columnCount; i++) {
+      const column = document.createElement('div');
+      column.style.position = 'absolute';
+      column.style.left = `${i * 20}px`;
+      column.style.top = `${Math.random() * -1000}px`;
+      column.style.color = 'rgba(0, 255, 65, 0.7)';
+      column.style.fontFamily = 'monospace';
+      column.style.fontSize = '14px';
+      column.style.whiteSpace = 'nowrap';
+      column.style.userSelect = 'none';
+
+      const columnHeight = Math.floor(Math.random() * 100) + 50;
+      let content = '';
+
+      for (let j = 0; j < columnHeight; j++) {
+        content += Math.random() > 0.5 ? '1' : '0';
+        content += '<br>';
+      }
+
+      column.innerHTML = content;
+      binaryRainContainer.appendChild(column);
+
+      animateColumn(column, height);
+    }
+  }
+
+  function animateColumn(column, height) {
+    let position = parseFloat(column.style.top);
+    const speed = Math.random() * 2 + 1;
+
+    function step() {
+      position += speed;
+      column.style.top = `${position}px`;
+
+      if (position > height) {
+        position = -1000;
+        column.style.top = `${position}px`;
+        column.style.left = `${Math.random() * window.innerWidth}px`;
+      }
+
+      requestAnimationFrame(step);
+    }
+
+    requestAnimationFrame(step);
+  }
+
+  // Animate elements when they come into view
+  function animateOnScroll() {
+    const animateElements = document.querySelectorAll('.animate-on-scroll');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('appear');
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+
+    animateElements.forEach(element => {
+      observer.observe(element);
+    });
+  }
+
+  // Terminal animation
+  function animateTerminal() {
+    const terminalContent = document.querySelector('.terminal-content');
+    const lines = terminalContent.querySelectorAll('p:not(.typing)');
+
+    lines.forEach((line, index) => {
+      line.style.opacity = '0';
+
+      setTimeout(() => {
+        line.style.transition = 'opacity 0.5s ease';
+        line.style.opacity = '1';
+      }, (index + 1) * 500);
+    });
+  }
+
+  // Tab functionality for both services and code
+  function setupTabs() {
+    // Service tabs
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        // Remove active class from all buttons and contents
+        tabButtons.forEach(btn => btn.classList.remove('active'));
+        tabContents.forEach(content => content.classList.remove('active'));
+
+        // Add active class to clicked button
+        button.classList.add('active');
+
+        // Show corresponding content
+        const tabId = button.getAttribute('data-tab');
+        document.getElementById(`${tabId}-tab`).classList.add('active');
+      });
+    });
+
+    // Code tabs
+    const codeTabs = document.querySelectorAll('.code-tab');
+    const codeEditors = document.querySelectorAll('.code-editor');
+
+    codeTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Remove active class from all tabs and editors
+        codeTabs.forEach(t => t.classList.remove('active'));
+        codeEditors.forEach(editor => editor.classList.remove('active'));
+
+        // Add active class to clicked tab
+        tab.classList.add('active');
+
+        // Show corresponding editor
+        const codeId = tab.getAttribute('data-code');
+        document.getElementById(`${codeId}-code`).classList.add('active');
+      });
+    });
+
+    // Run button functionality
+    const runButtons = document.querySelectorAll('.run-btn');
+    const outputContent = document.querySelector('.output-content');
+    const clearButton = document.querySelector('.clear-btn');
+
+    runButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const activeEditor = document.querySelector('.code-editor.active');
+        const codeType = activeEditor.id.split('-')[0];
+
+        outputContent.innerHTML = `> Running ${codeType} demo...\n\n`;
+
+        // Simulate console.log
+        const originalConsoleLog = console.log;
+        const originalConsoleError = console.error;
+
+        console.log = function(...args) {
+          originalConsoleLog.apply(console, args);
+          outputContent.innerHTML += args.join(' ') + '\n';
+          outputContent.scrollTop = outputContent.scrollHeight;
+        };
+
+        console.error = function(...args) {
+          originalConsoleError.apply(console, args);
+          outputContent.innerHTML += `<span style="color: var(--accent);">${args.join(' ')}</span>\n`;
+          outputContent.scrollTop = outputContent.scrollHeight;
+        };
+
+        // Execute code based on type
+        try {
+          if (codeType === 'scanner') {
+            outputContent.innerHTML += '(Python code simulation - in a real environment this would scan network ports)\n\n';
+            outputContent.innerHTML += 'Port 22: Open\n  Service: ssh\n';
+            outputContent.innerHTML += 'Port 80: Open\n  Service: http\n';
+            outputContent.innerHTML += 'Port 443: Open\n  Service: https\n';
+            outputContent.innerHTML += 'Port 3306: Open\n  Service: mysql\n';
+            outputContent.innerHTML += '-------------------------------------------------\n';
+            outputContent.innerHTML += 'Scan completed in: 00:00:03.456789\n';
+            outputContent.innerHTML += '-------------------------------------------------\n';
+          } else if (codeType === 'xss') {
+            // Execute XSS detector demo
+            outputContent.innerHTML += 'Running XSS Detector demo...\n\n';
+            const detector = {
+              patterns: [
+                /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,
+                /onerror\s*=/gi,
+                /eval\s*\(/gi
+              ],
+              riskLevels: {
+                HIGH: 'High Risk',
+                MEDIUM: 'Medium Risk',
+                LOW: 'Low Risk',
+                SAFE: 'No Detected Risk'
+              },
+              scan: function(input) {
+                const matches = [];
+                let highestRisk = this.riskLevels.SAFE;
+
+                this.patterns.forEach((pattern, index) => {
+                  if (pattern.test(input)) {
+                    const risk = index === 0 ? this.riskLevels.HIGH : (index === 1 ? this.riskLevels.MEDIUM : this.riskLevels.LOW);
+                    matches.push({ pattern: pattern.toString(), risk });
+
+                    if (risk === this.riskLevels.HIGH && highestRisk !== this.riskLevels.HIGH) {
+                      highestRisk = this.riskLevels.HIGH;
+                    } else if (risk === this.riskLevels.MEDIUM && highestRisk !== this.riskLevels.HIGH) {
+                      highestRisk = this.riskLevels.MEDIUM;
+                    } else if (risk === this.riskLevels.LOW && highestRisk === this.riskLevels.SAFE) {
+                      highestRisk = this.riskLevels.LOW;
+                    }
+                  }
+                });
+
+                return { risk: highestRisk, matches };
+              },
+              sanitize: function(input) {
+                return input
+                        .replace(/</g, '&lt;')
+                        .replace(/>/g, '&gt;')
+                        .replace(/"/g, '&quot;')
+                        .replace(/'/g, '&#x27;')
+                        .replace(/\//g, '&#x2F;');
+              }
+            };
+
+            const sample = '<img src="x" onerror="alert(document.cookie)">';
+            console.log('Scanning:', sample);
+            const result = detector.scan(sample);
+            console.log('Result:', JSON.stringify(result, null, 2));
+            console.log('Sanitized:', detector.sanitize(sample));
+          } else if (codeType === 'encryption') {
+            // Simulate encryption demo
+            outputContent.innerHTML += 'Simulating encryption operations (Web Crypto API simulation)...\n\n';
+            console.log('Initializing Secure Messenger...');
+            console.log('Generating Alice\'s keys...');
+            console.log('Public Key (share this): MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2LZ2d8bB0...');
+            console.log('Generating Bob\'s keys...');
+            console.log('Public Key (share this): pXt67JHkqz1OeID5ORePQ9JgMyI7yV8aO3Ec39D8d...');
+
+            const message = "This is a top secret message that only Bob should be able to read!";
+            console.log('Alice wants to send:', message);
+            console.log('Alice encrypting message with Bob\'s public key...');
+            console.log('Encrypted message: A7fYd92jdX8sW4tL1pM5nQ3cK0hJ7iD8vR6bY5pO3jK8lD9...');
+            console.log('Bob decrypting message with his private key...');
+            console.log('Bob received:', message);
+          }
+        } catch (err) {
+          console.error('Error executing code:', err.message);
+        }
+
+        // Restore console functions
+        console.log = originalConsoleLog;
+        console.error = originalConsoleError;
+      });
+    });
+
+    // Clear button functionality
+    clearButton.addEventListener('click', () => {
+      outputContent.innerHTML = '';
+    });
+  }
+
+  // Initialize animations
+  window.addEventListener('load', () => {
+    createBinaryRain();
+    animateOnScroll();
+    animateTerminal();
+    setupTabs();
+
+    // Glitch effect for the hero title
+    const glitchText = document.querySelector('.glitch-text');
+
+    setInterval(() => {
+      glitchText.style.animation = 'glitch 0.3s linear';
+
+      setTimeout(() => {
+        glitchText.style.animation = 'none';
+      }, 300);
+    }, 3000);
+  });
+
+  // Resize event handler
+  window.addEventListener('resize', () => {
+    const binaryRainContainer = document.getElementById('binaryRain');
+    binaryRainContainer.innerHTML = '';
+    createBinaryRain();
+  });
+</script>
+</body>
+</html>
